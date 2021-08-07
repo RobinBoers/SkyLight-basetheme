@@ -12,17 +12,24 @@ if(file_exists($file) && filesize($file) > 0){
     $contents = fread($handle, filesize($file));
     $blogs = json_decode($contents);
     fclose($handle);
-    
+
+    $postnum = 0;    
     
     foreach ($blogs as $blog){
-            if($fullView == true && $blog->id == $pagename) { echo ''; } else { ?>
+            if($fullView == true && $blog->id == $pagename) { echo ''; } else {
+                if($postnum !== 0) {
+                    echo "<hr>";
+                }
+
+                $postnum += 1;
+            ?>
             <article class="post">
-                <h3><a href="<?= $blog->link ?>"><?= $blog->title ?></a></h3>
-                <p class="clearfix">posted by: <b><?= $blog->auteur ?></b> on <b><?= $blog->datum ?></b>, Tags: <a href="<?php echo $blog->taglink; ?>"><b><?= $blog->tags ?></b></a></p>
+                <h3><a href="<?= $root_path.$blog->link ?>"><?= $blog->title ?></a></h3>
+                <p class="clearfix">posted by: <b><?= $blog->auteur ?></b> on <b><?= $blog->datum ?></b>, Tags: <a href="<?php echo $root_path.$blog->taglink; ?>"><b><?= $blog->tags ?></b></a></p>
                 <div class="clearfix blogtext postcontent">
                     <?php
                         $text = $blog->text;
-                        $text = substr($text, 0, 340);
+                        $text = substr($text, 0, 500);
                         $text = substr($text, 0, strrpos($text, ' ')) . " ..."; 
                         echo(nl2br($text))
                     ?>
