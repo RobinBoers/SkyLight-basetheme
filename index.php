@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= $sitelanguage ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,9 @@
     
     <header>
         <h1><?php echo $sitetitle; ?></h1>
-        <img src="<?php echo $root_path ?>/content/logo.jpg" class="logo">
+        <?php if(file_exists($root_path."/content/logo.jpg")) {
+            echo '<img src="'.$root_path.'/content/logo.jpg" class="logo">';
+        } ?>
         <nav>
             <?php include "content/menu.php"; ?>
         </nav>
